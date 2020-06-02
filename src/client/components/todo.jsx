@@ -1,6 +1,6 @@
 import React from "react";
 
-export default class List extends React.Component {
+export default class Todo extends React.Component {
     constructor() {
       super();
   
@@ -10,31 +10,30 @@ export default class List extends React.Component {
       };
     }
     changeHandler(event) {
+        console.log(event.target.value)
         this.setState({item: event.target.value});
     }
-
     clickHandler() {
-        this.state.list.push(this.state.item);
+        console.log(this)
+        let newList = this.state.list;
+        newList.push(this.state.item)
+        this.setState({list:newList, item:""})
+
     }
-    
       render() {
-        var allItems = this.state.list.map((index) => {
+        var allItems = this.state.list.map((item,index) => {
             return (
-                <li>{index}</li>
+                <li key={index}>{item}</li>
                 )
         })
         return (
             <div>
-          <form>
             <div>
-              <input type="text" value={this.state.item} onChange={this.changeHandler}></input>
+              <input type="text" value={this.state.item} onChange={()=>{this.changeHandler(event)}}></input>
             </div> 
-            <button type = 'submit' onClick={this.clickHandler}> Add Item </button>
-          </form>
+            <button onClick={()=>{this.clickHandler()}}> Add Item </button>
               <ul>{allItems}</ul>
           </div>
-          
-
         );
       }
     }
